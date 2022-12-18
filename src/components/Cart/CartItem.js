@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./CartItem.module.css";
 import { cartActions } from "../Store/CartReducer";
 const CartItem = (props) => {
@@ -21,7 +21,6 @@ const CartItem = (props) => {
       <header>
         <h3>{props.title}</h3>
         <div className={classes.price}>
-          {/* ${total.toFixed(2)}{" "} */}
           <span className={classes.itemprice}>
             (${props.price.toFixed(2)}/item)
           </span>

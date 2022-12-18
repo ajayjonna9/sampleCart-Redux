@@ -3,6 +3,7 @@ const initialState = {
   cartValues: [],
   cartTotal: 0,
   isCartOpen: false,
+  cartAmount: 0,
 };
 const cartSlice = createSlice({
   name: "cart",
@@ -10,12 +11,15 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       console.log("pay", action.payload);
+      state.cartAmount += action.payload.price;
+
       const existingEle = state.cartValues.findIndex(
         (item) => item.id === action.payload.id
       );
       if (existingEle >= 0) {
         let ele = state.cartValues[existingEle];
         ele.quantity += 1;
+
         console.log("hi", ele);
 
         // state.cartValues[existingEle] = newele;
@@ -30,16 +34,15 @@ const cartSlice = createSlice({
         (item) => item.id === action.payload
       );
       let ele = state.cartValues[existingEle];
+      state.cartAmount -= ele.price;
+      state.cartTotal -= 1;
       if (ele.quantity > 1) {
         ele.quantity -= 1;
-
-        // state.cartValues[existingEle] = newele;
       } else {
         state.cartValues = state.cartValues.filter(
           (item) => item.id !== action.payload
         );
       }
-      state.cartTotal -= 1;
     },
     cartOpen: (state) => {
       state.isCartOpen = !state.isCartOpen;
